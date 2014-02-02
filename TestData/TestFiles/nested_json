@@ -1,0 +1,22 @@
+[
+   {
+      "CATEGORY_ID":"A",
+      "PRODUCT_DETAILS":[
+         {
+            "PRODUCT_ID":"A.1",
+            "PRODUCT_NAME":"AAAA1111",
+            "UNIT_COST":0.1
+         }
+      ]
+   },
+   {
+      "CATEGORY_ID":"B",
+      "PRODUCT_DETAILS":[
+         {
+            "PRODUCT_ID":"B.1",
+            "PRODUCT_NAME":"BBBBB1111",
+            "UNIT_COST":0.2
+         }
+      ]
+   }
+]

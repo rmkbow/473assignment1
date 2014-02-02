@@ -1,12 +1,34 @@
-{
-    "email":[
-        {
-            "type":"home",
-            "name":"john.doe@gmail.com"
-        },
-        {
-            "type":"work",
-            "name":"jdoe@gmail.com"
-        }
-    ]
+[{
+    "position": 1,
+    "team_id": 10260,
+    "team": "Manchester United",
+    "teamshort": "Man Utd",
+    "played": 30,
+    "won": 25,
+    "drawn": 2,
+    "lost": 3,
+    "for": 70,
+    "against": 31,
+    "difference": 39,
+    "home": {
+        "played": 15,
+        "won": 14,
+        "drawn": 0,
+        "lost": 1,
+        "for": 39,
+        "against": 15,
+        "difference": 24
+    },
+    "away": {
+        "played": 15,
+        "won": 11,
+        "drawn": 2,
+        "lost": 2,
+        "for": 31,
+        "against": 16,
+        "difference": 15
+    },
+    "points": 77,
+    "info": "championsleague"
 }
+]

@@ -8,7 +8,9 @@ OUTPUT_FILES="TestOutput/Files"
 EXIT_CODE="echo $?"
 
 VALID_XML="single_element_xml simple_note_xml no_root_simple_note_xml entity_xml entity_xml_2 external_dtd_xml"
-#VALID_JSON=""
+VALID_JSON="simple_valid_json single_element_json no_root_json nested_json"
+INVALID_XML="invalid_xml"
+INVALID_JSON="invalid_json multiple_roots_json"
 
 #FILES=$VALID_XML
 
