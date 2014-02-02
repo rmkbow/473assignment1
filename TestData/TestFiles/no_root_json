@@ -1,0 +1,12 @@
+{
+    "email":[
+        {
+            "type":"home",
+            "name":"john.doe@gmail.com"
+        },
+        {
+            "type":"work",
+            "name":"jdoe@gmail.com"
+        }
+    ]
+}
