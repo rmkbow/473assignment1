@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 
 APP="python xml2json.py"
 SEPARATOR="echo -----------------------------"
@@ -20,6 +20,14 @@ function checkExitStatus(){
 	fi
 }
 
+XML2JSON="-t xml2json"
+JSON2XML="-t json2xml"
+STRIP_TEXT_LIST=(' ' '--strip_text')
+PRETTY_LIST=(' ' '--pretty')
+STRIP_NAMESPACE_LIST=(' ' '--strip_namespace')
+STRIP_NEWLINES_LIST=(' ' '--strip_newlines')
+
+
 for XML_FILES in $VALID_XML
 do
 	for FILEPATH in "$TEST_FILES"/$XML_FILES
@@ -36,46 +44,61 @@ do
 		fi
 
 		if $FILE_EXISTS; then
+			
+			for STRIP_TEXT in "${STRIP_TEXT_LIST[@]}"; do
+				for PRETTY in "${PRETTY_LIST[@]}"; do
+					for STRIP_NAMESPACE in "${STRIP_NAMESPACE_LIST[@]}"; do
+						for STRIP_NEWLINES in "${STRIP_NEWLINES_LIST[@]}"; do
+							echo "$STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
+							$APP $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES $TEST_FILES/$FILE
+							checkExitStatus $(echo $?)
+							$SEPARATOR
+						done
+					done
+				done
+			done
+
+
 
 			#Test with only input file specified, no other arguments
-			$APP $TEST_FILES/$FILE
-			checkExitStatus $(echo $?)
-			$SEPARATOR
+			#$APP $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)
+			#$SEPARATOR
 
 			#Test with -t xml2json argument and input file
-			$APP -t xml2json $TEST_FILES/$FILE
-			checkExitStatus $(echo $?)
-			$SEPARATOR			
+			#$APP $XML2JSON $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)
+			#$SEPARATOR			
 
 			#Test with -o argument to specify output file and input file
-			$APP -o $OUTPUT_FILES/$FILE $TEST_FILES/$FILE
-			checkExitStatus $(echo $?)			
-			$SEPARATOR
+			#$APP -o $OUTPUT_FILES/$FILE $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)			
+			#$SEPARATOR
 
 			#Test with -t, -o, and input file
-			$APP -t xml2json -o $OUTPUT_FILES/$FILE $FILE
-			checkExitStatus $(echo $?)
-			$SEPARATOR	
+			#$APP -o $OUTPUT_FILES/$FILE $XML2JSON $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)
+			#$SEPARATOR	
 			
 			#Test with --strip_text
-			$APP --strip_text $TEST_FILES/$FILE
-			checkExitStatus $(echo $?)
-			$SEPARATOR	
+			#$APP $STRIP_TEXT $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)
+			#$SEPARATOR	
 			
 			#Test with --pretty
-			$APP --pretty $TEST_FILES/$FILE
-			checkExitStatus $(echo $?)
-			$SEPARATOR
+			#$APP $PRETTY $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)
+			#$SEPARATOR
 			
 			#Test with --strip_namespace
-			$APP --strip_namespace $TEST_FILES/$FILE
-			checkExitStatus $(echo $?)
-			$SEPARATOR	
+			#$APP $STRIP_NAMESPACE $TEST_FILES/$FILE
+			#checkExitStatus $(echo $?)
+			#$SEPARATOR	
 
 			#Test with --strip_newlines
-			$APP --strip_newlines $TEST_FILES/$FILE
-                        checkExitStatus $(echo $?)
-                        $SEPARATOR 
+			#$APP $STRIP_NEWLINES $TEST_FILES/$FILE
+                        #checkExitStatus $(echo $?)
+                        #$SEPARATOR 
 		fi
 
 	done
