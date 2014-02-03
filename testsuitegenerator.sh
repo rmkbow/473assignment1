@@ -12,8 +12,6 @@ VALID_JSON="simple_valid_json single_element_json no_root_json nested_json"
 INVALID_XML="invalid_xml"
 INVALID_JSON="invalid_json multiple_roots_json"
 
-#FILES=$VALID_XML
-
 function checkExitStatus(){
 	if [ $1 -eq 0 ]; then
 		echo "PASS"
@@ -30,13 +28,13 @@ STRIP_NAMESPACE_LIST=(' ' '--strip_namespace')
 STRIP_NEWLINES_LIST=(' ' '--strip_newlines')
 
 
-for XML_FILES in $VALID_XML
-do
-	for FILEPATH in "$TEST_FILES"/$XML_FILES
-	do
-		XML=true
-		FILE=${FILEPATH##*/}
+VALID_FILES="$VALID_XML $VALID_JSON"
 
+for VALID_FILE in $VALID_FILES
+do
+	for FILEPATH in "$TEST_FILES"/$VALID_FILE
+	do
+		FILE=${FILEPATH##*/}
 		if [ -f $TEST_FILES/$FILE ]; then
 			FILE_EXISTS=true
 			echo "$FILE exists"
@@ -45,14 +43,32 @@ do
 			echo "$FILE does not exist"
 		fi
 
-		if $FILE_EXISTS; then
-			
+		if [[ $FILE == *xml* ]]; then
+			XML=true
+		else
+			XML=false
+		fi
+
+		if [[ $FILE == *json* ]]; then
+			JSON=true
+		else
+			JSON=false
+		fi
+
+		if $XML; then
+			TYPE=$XML2JSON
+		elif $JSON; then
+			TYPE=$JSON2XML
+		fi
+
+
+		if $FILE_EXISTS; then	
 			for STRIP_TEXT in "${STRIP_TEXT_LIST[@]}"; do
 				for PRETTY in "${PRETTY_LIST[@]}"; do
 					for STRIP_NAMESPACE in "${STRIP_NAMESPACE_LIST[@]}"; do
 						for STRIP_NEWLINES in "${STRIP_NEWLINES_LIST[@]}"; do
-							echo "$STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
-							$APP $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES $TEST_FILES/$FILE
+							echo "$TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
+							$APP $TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES $TEST_FILES/$FILE
 							checkExitStatus $(echo $?)
 							$SEPARATOR
 						done
@@ -60,47 +76,6 @@ do
 				done
 			done
 
-
-
-			#Test with only input file specified, no other arguments
-			#$APP $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)
-			#$SEPARATOR
-
-			#Test with -t xml2json argument and input file
-			#$APP $XML2JSON $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)
-			#$SEPARATOR			
-
-			#Test with -o argument to specify output file and input file
-			#$APP -o $OUTPUT_FILES/$FILE $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)			
-			#$SEPARATOR
-
-			#Test with -t, -o, and input file
-			#$APP -o $OUTPUT_FILES/$FILE $XML2JSON $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)
-			#$SEPARATOR	
-			
-			#Test with --strip_text
-			#$APP $STRIP_TEXT $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)
-			#$SEPARATOR	
-			
-			#Test with --pretty
-			#$APP $PRETTY $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)
-			#$SEPARATOR
-			
-			#Test with --strip_namespace
-			#$APP $STRIP_NAMESPACE $TEST_FILES/$FILE
-			#checkExitStatus $(echo $?)
-			#$SEPARATOR	
-
-			#Test with --strip_newlines
-			#$APP $STRIP_NEWLINES $TEST_FILES/$FILE
-                        #checkExitStatus $(echo $?)
-                        #$SEPARATOR 
 		fi
 
 	done
