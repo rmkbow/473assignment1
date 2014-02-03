@@ -1,0 +1,7 @@
+{ "org.goland.schemas.projectFoo.specProposal" :
+   "title": "JSON Extensions",
+   "author": { "firstName": "Yaron",
+               "com.example.schemas.middleName":"Y",
+               "org.goland.schemas.projectFoo.lastName": "Goland",
+             }
+}
