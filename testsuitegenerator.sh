@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 
 APP="python xml2json.py"
 SEPARATOR="echo -----------------------------"
@@ -22,16 +22,18 @@ function checkExitStatus(){
 
 XML2JSON="-t xml2json"
 JSON2XML="-t json2xml"
+
+VALID_FILES="$VALID_XML $VALID_JSON"
 STRIP_TEXT_LIST=(' ' '--strip_text')
 PRETTY_LIST=(' ' '--pretty')
 STRIP_NAMESPACE_LIST=(' ' '--strip_namespace')
 STRIP_NEWLINES_LIST=(' ' '--strip_newlines')
 
 
-VALID_FILES="$VALID_XML $VALID_JSON"
-
 for VALID_FILE in $VALID_FILES
 do
+
+
 	for FILEPATH in "$TEST_FILES"/$VALID_FILE
 	do
 		FILE=${FILEPATH##*/}
@@ -42,6 +44,8 @@ do
 			FILE_EXISTS=false
 			echo "$FILE does not exist"
 		fi
+
+
 
 		if [[ $FILE == *xml* ]]; then
 			XML=true
@@ -55,12 +59,18 @@ do
 			JSON=false
 		fi
 
-		if $XML; then
-			TYPE_LIST=(" " "$XML2JSON")
-		elif $JSON; then
-			TYPE_LIST=("$JSON2XML")
-		fi
 
+		if $XML; then
+			TYPE_LIST="$XML2JSON"
+		else
+			TYPE_LIST="$JSON2XML"
+			unset STRIP_TEXT_LIST
+			STRIP_TEXT_LIST=" "
+			unset PRETTY_LIST
+			PRETTY_LIST=" "
+			unset STRIP_NAMESPACE_LIST
+			STRIP_NAMESPACE_LIST=" "
+		fi
 
 		if $FILE_EXISTS; then
 			for TYPE in "${TYPE_LIST[@]}"; do
@@ -69,7 +79,7 @@ do
 						for STRIP_NAMESPACE in "${STRIP_NAMESPACE_LIST[@]}"; do
 							for STRIP_NEWLINES in "${STRIP_NEWLINES_LIST[@]}"; do
 								echo "$TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
-								$APP $TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES $TEST_FILES/$FILE
+								$APP $TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES -o "$OUTPUT_FILES/$FILE$TYPE$STRIP_TEXT$PRETTY$STRIP_NAMESPACE$STRIP_NEWLINES" $TEST_FILES/$FILE
 								checkExitStatus $(echo $?)
 								$SEPARATOR
 							done
