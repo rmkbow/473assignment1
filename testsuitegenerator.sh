@@ -1,11 +1,17 @@
 #!/bin/bash
-set -x
+#set -x
 
 APP="python xml2json.py"
 SEPARATOR="echo -----------------------------"
+
 TEST_FILES="TestData/TestFiles"
+
+EXPECTED_FILES="TestData/ExpectedOutput"
+EXPECTED_MESSAGES="TestData/ExpectedMessages"
+
 OUTPUT_FILES="TestOutput/Files"
-EXIT_CODE="echo $?"
+OUTPUT_MESSAGES="TestOutput/Messages"
+
 
 VALID_XML="single_element_xml simple_note_xml no_root_simple_note_xml entity_xml entity_xml_2 external_dtd_xml"
 VALID_JSON="simple_valid_json single_element_json no_root_json nested_json"
@@ -80,8 +86,9 @@ do
 							for STRIP_NEWLINES in "${STRIP_NEWLINES_LIST[@]}"; do
 								echo "$TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
 								$APP $TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES -o "$OUTPUT_FILES/$FILE$TYPE$STRIP_TEXT$PRETTY$STRIP_NAMESPACE$STRIP_NEWLINES" $TEST_FILES/$FILE
-								checkExitStatus $(echo $?)
+								checkExitStatus $(echo $?) > "$OUTPUT_MESSAGES/$FILE$TYPE$STRIP_TEXT$PRETTY$STRIP_NAMESPACE$STRIP_NEWLINES"
 								$SEPARATOR
+								diff  "$OUTPUT_FILES/$FILE$TYPE$STRIP_TEXT$PRETTY$STRIP_NAMESPACE$STRIP_NEWLINES"  "$EXPECTED_FILES/$FILE$TYPE$STRIP_TEXT$PRETTY$STRIP_NAMESPACE$STRIP_NEWLINES"
 							done
 						done
 					done
