@@ -1,0 +1,21 @@
+{
+    "note": {
+        "#text": "\n",
+        "body": {
+            "#tail": "\n",
+            "#text": "Don't forget me this weekend!"
+        },
+        "from": {
+            "#tail": "\n",
+            "#text": "Jani"
+        },
+        "heading": {
+            "#tail": "\n",
+            "#text": "Reminder"
+        },
+        "to": {
+            "#tail": "\n",
+            "#text": "Tove"
+        }
+    }
+}
