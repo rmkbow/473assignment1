@@ -56,26 +56,27 @@ do
 		fi
 
 		if $XML; then
-			TYPE=$XML2JSON
+			TYPE_LIST=(" " "$XML2JSON")
 		elif $JSON; then
-			TYPE=$JSON2XML
+			TYPE_LIST=("$JSON2XML")
 		fi
 
 
-		if $FILE_EXISTS; then	
-			for STRIP_TEXT in "${STRIP_TEXT_LIST[@]}"; do
-				for PRETTY in "${PRETTY_LIST[@]}"; do
-					for STRIP_NAMESPACE in "${STRIP_NAMESPACE_LIST[@]}"; do
-						for STRIP_NEWLINES in "${STRIP_NEWLINES_LIST[@]}"; do
-							echo "$TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
-							$APP $TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES $TEST_FILES/$FILE
-							checkExitStatus $(echo $?)
-							$SEPARATOR
+		if $FILE_EXISTS; then
+			for TYPE in "${TYPE_LIST[@]}"; do
+				for STRIP_TEXT in "${STRIP_TEXT_LIST[@]}"; do
+					for PRETTY in "${PRETTY_LIST[@]}"; do
+						for STRIP_NAMESPACE in "${STRIP_NAMESPACE_LIST[@]}"; do
+							for STRIP_NEWLINES in "${STRIP_NEWLINES_LIST[@]}"; do
+								echo "$TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES"
+								$APP $TYPE $STRIP_TEXT $PRETTY $STRIP_NAMESPACE $STRIP_NEWLINES $TEST_FILES/$FILE
+								checkExitStatus $(echo $?)
+								$SEPARATOR
+							done
 						done
 					done
 				done
 			done
-
 		fi
 
 	done
