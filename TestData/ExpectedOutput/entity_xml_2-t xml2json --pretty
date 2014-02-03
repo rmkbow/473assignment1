@@ -1,0 +1,25 @@
+{
+    "note": {
+        "#text": "\n",
+        "body": {
+            "#tail": "\n",
+            "#text": "Don't forget me this weekend!"
+        },
+        "footer": {
+            "#tail": "\n",
+            "#text": "Writer: Donald Duck.\u00a0Copyright: W3Schools."
+        },
+        "from": {
+            "#tail": "\n",
+            "#text": "Jani"
+        },
+        "heading": {
+            "#tail": "\n",
+            "#text": "Reminder"
+        },
+        "to": {
+            "#tail": "\n",
+            "#text": "Tove"
+        }
+    }
+}
