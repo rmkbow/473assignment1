@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <element>
+      <CATEGORY_ID>A</CATEGORY_ID>
+      <PRODUCT_DETAILS>
+         <element>
+            <PRODUCT_ID>A.1</PRODUCT_ID>
+            <PRODUCT_NAME>AAAA1111</PRODUCT_NAME>
+            <UNIT_COST>0.1</UNIT_COST>
+         </element>
+      </PRODUCT_DETAILS>
+   </element>
+   <element>
+      <CATEGORY_ID>B</CATEGORY_ID>
+      <PRODUCT_DETAILS>
+         <element>
+            <PRODUCT_ID>B.1</PRODUCT_ID>
+            <PRODUCT_NAME>BBBBB1111</PRODUCT_NAME>
+            <UNIT_COST>0.2</UNIT_COST>
+         </element>
+      </PRODUCT_DETAILS>
+   </element>
+</root>
